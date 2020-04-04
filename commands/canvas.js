@@ -3,14 +3,17 @@ const Discord = require("discord.js");
 const Canvas = require('canvas');
 
 exports.run = async (bot, message, args, ops) => {
-  const canvas = Canvas.createCanvas(700, 250);
+	const canvas = Canvas.createCanvas(700, 250);
 	const ctx = canvas.getContext('2d');
 
-	// Since the image takes time to load, you should await it
-	const background = await Canvas.loadImage('./bg.jpg');
-	// This uses the canvas dimensions to stretch the image onto the entire canvas
+	const background = await Canvas.loadImage('./wallpaper.jpg');
 	ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-	// Use helpful Attachment class structure to process the file for you
+
+	// Select the color of the stroke
+	ctx.strokeStyle = '#74037b';
+	// Draw a rectangle with the dimensions of the entire canvas
+	ctx.strokeRect(0, 0, canvas.width, canvas.height);
+
 	const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
 	message.channel.send(`cool picture test`, attachment);
