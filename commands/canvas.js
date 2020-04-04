@@ -1,4 +1,5 @@
 const { RichEmbed } = require("discord.js");
+const Discord = require("discord.js");
 const Canvas = require('canvas');
 
 exports.run = async (bot, message, args, ops) => {
