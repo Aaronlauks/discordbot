@@ -13,6 +13,12 @@ exports.run = async (bot, message, args, ops) => {
 	ctx.strokeStyle = '#74037b';
 	// Draw a rectangle with the dimensions of the entire canvas
 	ctx.strokeRect(0, 0, canvas.width, canvas.height);
+	
+	// Select the font size and type from one of the natively available fonts
+	ctx.font = '60px sans-serif';
+	// Select the style that will be used to fill the text in
+	ctx.fillStyle = '#ffffff';
+	// Actually fill the text with a solid color
 	ctx.fillText(args.join(" "), canvas.width / 2.5, canvas.height / 1.8);
 
 	const attachment = new Attachment(canvas.toBuffer(), 'welcome-image.png');
