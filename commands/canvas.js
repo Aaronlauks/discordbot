@@ -6,7 +6,7 @@ exports.run = async (bot, message, args, ops) => {
 	const ctx = canvas.getContext('2d');
 
 	// Since the image takes time to load, you should await it
-	const background = await Canvas.loadImage('../bg.jpg');
+	const background = await Canvas.loadImage('./bg.jpg');
 	// This uses the canvas dimensions to stretch the image onto the entire canvas
 	ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 	// Use helpful Attachment class structure to process the file for you
