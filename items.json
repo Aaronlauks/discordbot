@@ -1,0 +1,174 @@
+{
+  "items": [
+    {
+      "name": "token",
+      "price": 10000,
+      "category": "Collectable",
+      "emoji": "<:token:690454183132004402>",
+      "Description": "A shiny golden coin that resembles Pusheen."
+    },
+    {
+      "name": "banana",
+      "price": 50,
+      "category": "Food",
+      "emoji": "<:bananaa:680733043127877718>",
+      "Description": "A long yellow fruit scepter"
+    },
+    {
+      "name": "strawberry",
+      "price": 50,
+      "category": "Food",
+      "emoji": "<:strawberryy:680732440431558719>",
+      "Description": "A round and juicy pink fruit"
+    },
+    {
+      "name": "eggplant",
+      "price": 65,
+      "category": "Food",
+      "emoji": "<:eggplantt:680732357191532566>",
+      "Description": "Looks like something else..."
+    },
+    {
+      "name": "apple",
+      "price": 50,
+      "category": "Food",
+      "emoji": "<:applee:680732333678002178>",
+      "Description": "Keeps the doctor away"
+    },
+    {
+      "name": "watermelon",
+      "price": 50,
+      "category": "Food",
+      "emoji": "<:watermelonn:680732271657222144>",
+      "Description": "It's bought in slices to prevent you from being fat"
+    },
+    {
+      "name": "potato",
+      "price": 50,
+      "category": "Food",
+      "emoji": "<:potatoo:680968580602265634>",
+      "Description": "Some use it as a toy **cough** toy story"
+    },
+    {
+      "name": "pear",
+      "price": 50,
+      "category": "Food",
+      "emoji": "<:pearr:680968891664826414>",
+      "Description": "Looks like a pickle"
+    },
+    {
+      "name": "peanut",
+      "price": 50,
+      "category": "Food",
+      "emoji": "<:peanutt:680968595873988650>",
+      "Description": "Great for feeding birds!"
+    },
+    {
+      "name": "peach",
+      "price": 65,
+      "category": "Food",
+      "emoji": "<:peachh:680968782314864657>",
+      "Description": "Pairs great with eggplants"
+    },
+    {
+      "name": "orange",
+      "price": 50,
+      "category": "Food",
+      "emoji": "<:orangee:680968870936182889>",
+      "Description": "Some people even eat the skin"
+    },
+    {
+      "name": "lemon",
+      "price": 40,
+      "category": "Food",
+      "emoji": "<:lemonn:680968849780375562>",
+      "Description": "Honestly it's not that sour"
+    },
+    {
+      "name": "grape",
+      "price": 70,
+      "category": "Food",
+      "emoji": "<:grapee:680968828506996742>",
+      "Description": "Costs more because it comes in a bunch"
+    },
+    {
+      "name": "donut",
+      "price": 90,
+      "category": "Food",
+      "emoji": "<:donutt:680968712844607500>",
+      "Description": "For people with sweet tooths"
+    },
+    {
+      "name": "cookie",
+      "price": 90,
+      "category": "Food",
+      "emoji": "<:cookiee:680968732168028263>",
+      "Description": "Hard but sweet!"
+    },
+    {
+      "name": "cherry",
+      "price": 55,
+      "category": "Food",
+      "emoji": "<:cherryy:680968798186111006>",
+      "Description": "In need of a stick in between"
+    },
+    {
+      "name": "bread",
+      "price": 60,
+      "category": "Food",
+      "emoji": "<:breadd:680968757929312296>",
+      "Description": "Who eats a whole loaf of bread?"
+    },
+    {
+      "name": "avocado",
+      "price": 40,
+      "category": "Food",
+      "emoji": "<:avocadoo:680968812442550305>",
+      "Description": "Avocado coming to make your day better!"
+    },
+    {
+      "name": "bacon",
+      "price": 90,
+      "category": "Food",
+      "emoji": "<:baconn:680968908194447393>",
+      "Description": "I don't think cats like bacon :C"
+    },
+    {
+      "name": "milk",
+      "price": 60,
+      "category": "Food",
+      "emoji": "<:milkk:680968680099545101>",
+      "Description": "Remember to drink your proteins!"
+    },
+    {
+      "name": "salt",
+      "price": 10,
+      "category": "Food",
+      "emoji": "<:saltt:680968558549008386>",
+      "Description": "Don't be salty, have some!"
+    }
+  ],
+  "index": [
+    "token",
+    "banana",
+    "strawberry",
+    "eggplant",
+    "apple",
+    "watermelon",
+    "potato",
+    "pear",
+    "peanut",
+    "peach",
+    "orange",
+    "lemon",
+    "grape",
+    "donut",
+    "cookie",
+    "cherry",
+    "bread",
+    "avocado",
+    "bacon",
+    "milk",
+    "salt"
+  ]
+}
