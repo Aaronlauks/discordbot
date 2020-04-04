@@ -15,8 +15,11 @@ exports.run = async (bot, message, args, ops) => {
 	ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
 	const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
+	const embed = new RichEmbed()
+	.setImage(attachment)
+	.setTitle('cool image');
 
-	message.channel.send(`cool picture test`, attachment);
+	message.channel.send(embed);
 }
 
 module.exports.config = {
