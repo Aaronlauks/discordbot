@@ -13,6 +13,7 @@ exports.run = async (bot, message, args, ops) => {
 	ctx.strokeStyle = '#74037b';
 	// Draw a rectangle with the dimensions of the entire canvas
 	ctx.strokeRect(0, 0, canvas.width, canvas.height);
+	ctx.fillText(args.join(" "), canvas.width / 2.5, canvas.height / 1.8);
 
 	const attachment = new Attachment(canvas.toBuffer(), 'welcome-image.png');
 

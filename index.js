@@ -5,7 +5,6 @@ const config = require("./config.json");
 const items = require("./items.json");
 const fs = require("fs");
 const recent = new Map();
-const active = new Map();
 const bot = new discord.Client({ disableEveryone: true });
 
 const mongoose = require('mongoose');
@@ -157,7 +156,6 @@ bot.on("message", async message => {
   let command;
   if (sender.bot) return;
   let ops = {
-      active: active,
       categories: categories,
       items: items
     }
