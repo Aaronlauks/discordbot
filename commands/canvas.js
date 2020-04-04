@@ -1,4 +1,4 @@
-const { RichEmbed } = require("discord.js");
+const { RichEmbed, Attachment } = require("discord.js");
 const Discord = require("discord.js");
 const Canvas = require('canvas');
 
@@ -14,12 +14,9 @@ exports.run = async (bot, message, args, ops) => {
 	// Draw a rectangle with the dimensions of the entire canvas
 	ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
-	const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
-	const embed = new RichEmbed()
-	.setImage(attachment)
-	.setTitle('cool image');
+	const attachment = new Attachment(canvas.toBuffer(), 'welcome-image.png');
 
-	message.channel.send(embed);
+	message.channel.send('insert image here:', attachment);
 }
 
 module.exports.config = {
