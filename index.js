@@ -71,13 +71,13 @@ bot.on("ready", async () => {
 .catch();
   let statuses = [
     `okie`,
-    `oshit im online`,
+    `COUGHE`,
     `ㅇㅅㅇ`,
     `Wear a mask!`,
-    `DM errors to Aaronlauks`,
+    `DM me for help!`,
     `${config.prefix}help`,
     `Prefix | (${config.prefix})`,
-    `Only in ${bot.guilds.size} servers!`,
+    `${bot.guilds.size} servers!`,
     `Made by Aaronlauks`,
     `${config.prefix}help <command>`,
     `coronavirus can't hurt me!`
