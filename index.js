@@ -1,10 +1,11 @@
 var bannedwords = ["fuck", "slut", "rape", "lolicon", "motherfucker", "loli", "f u c k", "lolli", "fvck", "fuk", "bitch", "lollicon", "lolicom", "porn", "sex"];
-let deleteChannels = ['682721467468611634', '682200283714945045', '684399471811231754', '673501879451516940'];
+let deleteChannels = ['682721467468611634', '682200283714945045', '684399471811231754', '673501879451516940', '698127929820839966'];
 const discord = require("discord.js"); 
 const config = require("./config.json");
 const items = require("./items.json");
 const fs = require("fs");
 const recent = new Map();
+const dm = new Map();
 const bot = new discord.Client({ disableEveryone: true });
 
 const mongoose = require('mongoose');
@@ -71,7 +72,7 @@ bot.on("ready", async () => {
 .catch();
   let statuses = [
     `okie`,
-    `COUGHE`,
+    `covid-20`,
     `ㅇㅅㅇ`,
     `Wear a mask!`,
     `DM me for help!`,
@@ -123,18 +124,30 @@ bot.on("message", message => {
   if(deleteChannels.includes(message.channel.id)){
     message.delete();
   }
+  console.log(message.guild)
     if (message.channel.type === "dm") {
-    let mc = message.content;
-    let mem = message.author;
-    const embed = new discord.RichEmbed();
-    embed.setAuthor(`${mem.username}: ${mc}`, mem.avatarURL);
-    if (mem.id !== "574910890399236104") {
-      embed.setColor("#00ff15");
-    }
-    bot.channels
-      .get("673501879451516940")
-      .send(embed)
-      .catch();
+      let mc = message.content;
+      let mem = message.author;
+      const embed = new discord.RichEmbed();
+      embed.setAuthor(`${mem.username}: ${mc}`, mem.avatarURL);
+      if (mem.id !== "574910890399236104") {
+        embed.setColor("#00ff15");
+      }
+      bot.channels.get("673501879451516940").send(embed).catch();
+      if(error.has(message.author.id)) {
+        
+      } else {
+        let id = "";
+        error.set(message.author.id, new Array());
+        bot.guilds.get('662687974466781185').createChannel(message.author.username, "text").then(channel => {
+          channel.setParent('696205941510766673');
+          id = channel.id;
+        }).catch(console.error);
+        recent.get(message.author.id).push(id);// 0
+        recent.get(message.author.id).push("unverified");// 1
+        bot.channels.get(id).send(`**${message.author.username}**`).catch();
+        bot.channels.get(id).send(mc).catch();
+      }
     }
 });
 
