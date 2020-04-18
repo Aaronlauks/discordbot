@@ -15,7 +15,7 @@ mongoose.connect(config.mongodb, {
 });
 const Messages = require('./models/messages.js');
 const inv = require('./models/inv.js');
-
+const disable = require('./models/disable.js');
 
 
 bot.aliases = new discord.Collection();
@@ -228,6 +228,10 @@ bot.on("message", async message => {
   let cmd = args.shift().toLowerCase(); //cmd is the command name (a help: help)
   let command;
   if (sender.bot) return;
+  let disableChannels = await disable.findOne({
+    guildID: message.guild.id
+  });
+  if(cmd != "enable" && disableChannels && disableChannels.channelID.includes(message.channel.id)) return message.channel.send(`<:xcross:690880230562201610> Commands are disabled in this channel!`).then(m => m.delete(3000));
   let ops = {
       categories: categories,
       items: items
@@ -307,7 +311,7 @@ bot.on("message", async message => {
     });
     await invUser.save().catch(e => console.log(e));
   }
-  
+
   let messageUser = await Messages.findOne({
     userID: message.author.id
   });
@@ -375,5 +379,5 @@ function event(){
   }
 }
   
+bot.login("NTc0OTEwODkwMzk5MjM2MTA0.Xprwkw.dYftohJviAQdvkLJDYahyHWG_9k");
 //bot.login(process.env.BOT_TOKEN);
-bot.login(process.env.BOT_TOKEN);
