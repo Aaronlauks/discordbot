@@ -376,4 +376,4 @@ function event(){
 }
   
 //bot.login(process.env.BOT_TOKEN);
-bot.login("NTc0OTEwODkwMzk5MjM2MTA0.XpBmaQ.xjjexAPXF00g9zBAO6Z58-ZOfHU");
+bot.login(process.env.BOT_TOKEN);
