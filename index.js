@@ -118,35 +118,95 @@ bot.on("message", msg => {
   }
 });
 
-
+let number = 0;
 bot.on("message", message => {
   if (message.author.bot) return;
   if(deleteChannels.includes(message.channel.id)){
     message.delete();
   }
-  console.log(message.guild)
+  if(message.channel.type != "dm" && message.channel.topic && message.channel.topic.includes(`Tag+ID: `)){
+    let id = message.channel.topic.trim().split(/ +/g);
+    if(!dm.has(id[2])) {
+      message.channel.delete();
+    } else {
+      if(dm.get(id[2])[1] === "unverified"){
+        let mc = message.content.trim().split(/ +/g);
+        if(mc[0] !== "verify" && mc[0] !== "cancel") {
+          message.channel.send(`<:xcross:690880230562201610> Please type 'verify' to start the ticket. Type 'cancel <reason>' to cancel the ticket.`)
+        } else {
+          if(mc[0] == "verify") {
+            dm.get(id[2])[1] = "verified";
+            const embed = new discord.RichEmbed().setTitle(`Ticket Verified`).setColor("#00ff15").setTimestamp().setAuthor(`${message.author.tag}`, message.author.avatarURL);
+            message.channel.send(embed);
+            embed.setDescription(`This is the start of your ticket!\nType to send a message!`)
+            dm.get(id[2])[2].sendMessage(embed)
+            bot.channels.get("696205702519062548").send(embed);
+          } else {
+            const embed = new discord.RichEmbed().setTitle(`Ticket Cancelled`).setColor("#ff0000").setTimestamp().setAuthor(`${message.author.tag}`, message.author.avatarURL);
+            message.channel.send(embed);
+            mc.shift();
+            embed.setDescription(`Your ticket has been cancelled by ${message.author.tag}!`).addField(`Reason`, (mc.join(" ") || "None provided"));
+            dm.get(id[2])[2].sendMessage(embed);
+            dm.delete(id[2]);
+            bot.channels.get("696205702519062548").send(embed);
+          }
+        }
+      } else {
+        let mc = message.content.trim().split(/ +/g);
+        if(mc[0] == "resolve"){
+          const embed = new discord.RichEmbed().setTitle(`Ticket Resolved`).setColor("#ff0000").setTimestamp().setAuthor(`${message.author.tag}`, message.author.avatarURL);
+          message.channel.send(embed);
+          mc.shift();
+          embed.addField('Resolved:', mc.join(" "));
+          dm.get(id[2])[2].sendMessage(embed);
+          bot.channels.get("696205702519062548").send(embed);
+          dm.delete(id[2]);
+        } else {
+          const embed = new discord.RichEmbed().setAuthor(`${message.author.username}: ${message.content}`, message.author.avatarURL).setColor('#36393f');
+          dm.get(id[2])[2].sendMessage(embed)
+        }
+      }
+    }
+  }
     if (message.channel.type === "dm") {
       let mc = message.content;
       let mem = message.author;
       const embed = new discord.RichEmbed();
       embed.setAuthor(`${mem.username}: ${mc}`, mem.avatarURL);
-      if (mem.id !== "574910890399236104") {
-        embed.setColor("#00ff15");
-      }
       bot.channels.get("673501879451516940").send(embed).catch();
-      if(error.has(message.author.id)) {
-        
+      if(dm.has(message.author.id)) {
+        if(dm.get(message.author.id)[1] === "unverified"){
+          message.author.sendMessage(`<:xcross:690880230562201610> You're ticket has not been started! Please wait for verification.`)
+        } else {
+          embed.setColor('#36393f')
+          bot.channels.get(dm.get(message.author.id)[0]).send(embed).catch();
+        }
+        if(message.content === "cancel") {
+          let dChannel = bot.guilds.get('662687974466781185').channels.get(dm.get(message.author.id)[0])
+          dChannel.delete();
+          dm.delete(message.author.id);
+          message.author.sendMessage("<:xcross:690880230562201610> Ticket cancelled!")
+          bot.channels.get("696205702519062548").send(`<:xcross:690880230562201610> ${message.author.tag} Ticket cancelled!`);
+        }
       } else {
+        number++;
         let id = "";
-        error.set(message.author.id, new Array());
-        bot.guilds.get('662687974466781185').createChannel(message.author.username, "text").then(channel => {
-          channel.setParent('696205941510766673');
+        dm.set(message.author.id, new Array());
+        bot.guilds.get('662687974466781185').createChannel(`Ticket-${number}`, {
+          type: "text",
+          topic: `Tag+ID: ${message.author.tag} ${message.author.id}`,
+          parent: "696205941510766673"
+        }).then(channel =>{
           id = channel.id;
-        }).catch(console.error);
-        recent.get(message.author.id).push(id);// 0
-        recent.get(message.author.id).push("unverified");// 1
-        bot.channels.get(id).send(`**${message.author.username}**`).catch();
-        bot.channels.get(id).send(mc).catch();
+        }).then(ok =>{
+        dm.get(message.author.id).push(id);// 0
+        dm.get(message.author.id).push("unverified");// 1
+        dm.get(message.author.id).push(message.author);// 2
+        const embed = new discord.RichEmbed().setAuthor(`Start of ${message.author.username}'s ticket:`, message.author.avatarURL).setDescription(mc).setTimestamp();
+        bot.channels.get(id).send(embed).catch();
+        bot.channels.get("696205702519062548").send(embed).catch();
+        message.author.sendMessage("🎟️ New ticket made! Type 'cancel' anytime to cancel your ticket.")
+        })
       }
     }
 });
@@ -315,5 +375,5 @@ function event(){
   }
 }
   
-
-bot.login(process.env.BOT_TOKEN);
+//bot.login(process.env.BOT_TOKEN);
+bot.login("NTc0OTEwODkwMzk5MjM2MTA0.XpBmaQ.xjjexAPXF00g9zBAO6Z58-ZOfHU");

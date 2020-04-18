@@ -15,6 +15,7 @@ exports.run = async (bot, message, args) => {
       .setAuthor(`😂😂😂 Here is your joke:`, message.guild.iconURL)
       .setThumbnail(bot.user.displayAvatarURL)
     .setDescription(`${jokeValue.setup}\n\nAnswer: ||${jokeValue.punchline}||`)
+    .setFooter(`Category: ${jokeValue.type}`)
     message.channel.send(embed);
     }
 
