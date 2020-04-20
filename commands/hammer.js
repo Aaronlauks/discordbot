@@ -39,8 +39,8 @@ exports.run = (bot, message, args) => {
 module.exports.config = {
   name: "hammer",
   description: "Bans a user specified in the command",
-  category: "Administration",
+  category: "Moderation",
   usage: "a hammer <user> <reason>",
-  accessableby: "Administrators",
+  accessableby: "Moderators",
   aliases: ["banhammer", "ban"]
 }

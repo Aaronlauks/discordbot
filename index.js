@@ -87,7 +87,7 @@ bot.on("ready", async () => {
     let status = statuses[Math.floor(Math.random() * statuses.length)];
     bot.user.setActivity(status, {
       type: "STREAMING",
-      url: "https://www.twitch.tv/Aaronlauks"
+      url: "https://www.twitch.tv/AaronBotDiscord"
     });
   }, 10000);
   bot.user.setActivity(statuses);
@@ -229,9 +229,9 @@ bot.on("message", async message => {
   let command;
   if (sender.bot) return;
   let disableChannels = await disable.findOne({
-    guildID: message.guild.id
+    channelID: message.channel.id
   });
-  if(cmd != "enable" && disableChannels && disableChannels.channelID.includes(message.channel.id)) return message.channel.send(`<:xcross:690880230562201610> Commands are disabled in this channel!`).then(m => m.delete(3000));
+  
   let ops = {
       categories: categories,
       items: items
@@ -244,6 +244,7 @@ bot.on("message", async message => {
     } else {
       command = bot.commands.get(bot.aliases.get(cmd));
     }
+    if(disableChannels && disableChannels.commandName.includes(command.config.name)) return message.channel.send(`<:xcross:690880230562201610> \`${cmd}\` command is disabled in this channel!`).then(m => m.delete(3000));
     command.run(bot, message, args, ops);
   } catch (e) {
     console.log(`${cmd} is not a command`);

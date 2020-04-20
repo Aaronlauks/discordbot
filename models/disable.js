@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
-  guildID: String,
-  channelID: Array
+  channelID: String,
+  commandName: Array
 });
 
 module.exports = mongoose.model("disable", messageSchema);
