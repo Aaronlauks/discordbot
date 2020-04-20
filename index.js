@@ -380,5 +380,4 @@ function event(){
   }
 }
   
-bot.login("NTc0OTEwODkwMzk5MjM2MTA0.Xprwkw.dYftohJviAQdvkLJDYahyHWG_9k");
-//bot.login(process.env.BOT_TOKEN);
+bot.login(process.env.BOT_TOKEN);
