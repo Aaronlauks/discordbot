@@ -13,8 +13,6 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
-    "canvas": "^2.6.1",
-    "canvass": "^0.1.0",
     "country-emoji": "^1.5.3",
     "country-list": "^2.2.0",
     "disco-oauth": "^4.2.7",
