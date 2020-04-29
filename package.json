@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "s",
   "main": "index.js",
+  "engines": {
+    "node": "12.16.x"
+  },
   "scripts": {
     "start": "node index.js"
   },
