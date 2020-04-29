@@ -381,5 +381,6 @@ function event(){
     return `rarer event`;
   }
 }
-  
-bot.login('NTc0OTEwODkwMzk5MjM2MTA0.Xp6pPA.uxA7cBmfX2cK8L5F8ovVnHGYh5I');
+
+
+bot.login(process.env.BOT_TOKEN);
