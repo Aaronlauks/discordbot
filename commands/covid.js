@@ -5,8 +5,12 @@ const { getCode, getName } = require('country-list');
 
 
 exports.run = async (bot, message, args) => {
-    let input = args.join(" ");
-    let Cap = input.charAt(0).toUpperCase() + input.substring(1);
+  var i;
+  let a = [];
+  for(i = 0; i < args.length; i++){
+    a.push(args[i].charAt(0).toUpperCase() + args[i].substring(1));
+  }
+    let Cap = a.join(" ");
     let name = "";
     let code = "";
 
@@ -28,6 +32,15 @@ exports.run = async (bot, message, args) => {
     } else return message.channel.send(`<:xcross:690880230562201610> Enter a valid country name or country code >:C`)
     let active = "";
     console.log(name)
+    if(!cases[name]) {
+      const embed = new discord.RichEmbed()
+      .setTitle(`Click me for more info!`)
+      .setURL('https://www.worldometers.info/coronavirus/')
+      .setColor('https://www.worldometers.info/coronavirus/')
+      .setAuthor(`Sorry, we do not have info for ${name}`, bot.user.displayAvatarURL)
+      .setDescription(`We searched far and wide for \`${name}\`\nPlease visit the link if you really want more info about \`${name}\``)
+      return message.channel.send(embed)
+    } 
     if(((cases[name][cases[name].length - 1].confirmed) - (cases[name][cases[name].length - 1].recovered) - (cases[name][cases[name].length - 1].deaths)) - ((cases[name][cases[name].length - 2].confirmed) - (cases[name][cases[name].length - 2].recovered) - (cases[name][cases[name].length - 2].deaths)) > -1) active = `+${(((cases[name][cases[name].length - 1].confirmed) - (cases[name][cases[name].length - 1].recovered) - (cases[name][cases[name].length - 1].deaths)) - ((cases[name][cases[name].length - 2].confirmed) - (cases[name][cases[name].length - 2].recovered) - (cases[name][cases[name].length - 2].deaths))).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
     if(((cases[name][cases[name].length - 1].confirmed) - (cases[name][cases[name].length - 1].recovered) - (cases[name][cases[name].length - 1].deaths)) - ((cases[name][cases[name].length - 2].confirmed) - (cases[name][cases[name].length - 2].recovered) - (cases[name][cases[name].length - 2].deaths)) < 0) active = `${(((cases[name][cases[name].length - 1].confirmed) - (cases[name][cases[name].length - 1].recovered) - (cases[name][cases[name].length - 1].deaths)) - ((cases[name][cases[name].length - 2].confirmed) - (cases[name][cases[name].length - 2].recovered) - (cases[name][cases[name].length - 2].deaths))).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
     const embed = new discord.RichEmbed()

@@ -1,5 +1,7 @@
 var bannedwords = ["fuck", "slut", "rape", "lolicon", "motherfucker", "loli", "f u c k", "lolli", "fvck", "fuk", "bitch", "lollicon", "lolicom", "porn", "sex"];
 let deleteChannels = ['682721467468611634', '682200283714945045', '684399471811231754', '673501879451516940', '698127929820839966'];
+const OauthClient = require('disco-oauth')
+let oauthClient = new OauthClient('574910890399236104');
 const discord = require("discord.js"); 
 const config = require("./config.json");
 const items = require("./items.json");
@@ -96,7 +98,7 @@ bot.on("ready", async () => {
 
 
 bot.on('message', message => { //this event is fired, whenever the bot sees a new message
-   if (message.isMemberMentioned(bot.user)) { 
+   if (message.isMemberMentioned(bot.user) && !message.content.includes(`@everyone`)) { 
      message.channel.send(`My prefix is \`${config.prefix}\` so please stop pinging me ;-;`); 
    }
 });
@@ -380,4 +382,4 @@ function event(){
   }
 }
   
-bot.login(process.env.BOT_TOKEN);
+bot.login('NTc0OTEwODkwMzk5MjM2MTA0.Xp6pPA.uxA7cBmfX2cK8L5F8ovVnHGYh5I');
