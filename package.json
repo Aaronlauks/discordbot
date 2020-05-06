@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
+    "canvas": "^2.6.1",
     "country-emoji": "^1.5.3",
     "country-list": "^2.2.0",
     "disco-oauth": "^4.2.7",
@@ -30,10 +31,17 @@
     "sequelize": "^5.21.7",
     "simple-youtube-api": "^5.2.1",
     "yt-search": "^0.4.5",
-    "ytdl": "^1.3.0",
     "ytdl-core": "^0.20.4",
     "ytpl": "^0.1.20",
     "ytsearcher": "^1.2.2"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aaronlauks/discordbot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Aaronlauks/discordbot/issues"
+  },
+  "homepage": "https://github.com/Aaronlauks/discordbot#readme"
 }
