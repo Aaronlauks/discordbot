@@ -383,4 +383,4 @@ function event(){
 }
 
 
-bot.login("NTc0OTEwODkwMzk5MjM2MTA0.XqjxeA.1zU89O0L3rdDhHSOszHaQUfksbo");
+    bot.login(process.env.BOT_TOKEN);
