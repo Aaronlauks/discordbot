@@ -16,7 +16,10 @@ exports.run = async (bot, message, args, ops) => {
       if(!disableChannel){
         disableChannel = new disable({
           channelID: message.channel.id,
-          commandName: []
+          commandName: [],
+          editsOld: [],
+          editsNew: [],
+          deletes: []
         });
       }
       if(args[0] == "all"){
@@ -55,7 +58,7 @@ exports.run = async (bot, message, args, ops) => {
 
 module.exports.config = {
     name: "disable",
-    description: "disables bot commands on channels you specify",
+    description: "disables bot commands or command cateogries on channels you specify",
     category: "Moderation",
     usage: "a disable <command name>",
     accessableby: "Moderators",

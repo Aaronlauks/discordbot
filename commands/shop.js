@@ -10,6 +10,7 @@ exports.run = async (bot, message, args, ops) => {
   .setDescription(`__ Tags __\n\`Collectable item\` ─ Sells for how much you buy it for\n\`Food item\` ─ Used for feeding animals`);
   
   let page = 5;
+  if(args[0] && isNaN(args[0])) return message.channel.send(`<:xcross:690880230562201610> H-hey, t-that's not a number`)
   if(args[0]) page = args[0] * 5;
   let total = items.index.length;
   embed.setFooter(`Page ${(page/5)}/${Math.ceil(total/5)}`)

@@ -73,22 +73,12 @@ bot.on("ready", async () => {
 .send(embed)
 .catch();
   let statuses = [
-    `okie`,
-    `covid-20`,
-    `ㅇㅅㅇ`,
-    `Wear a mask!`,
-    `DM me for help!`,
-    `${config.prefix}help`,
-    `Prefix | (${config.prefix})`,
-    `${bot.guilds.size} servers!`,
-    `Made by Aaronlauks`,
-    `${config.prefix}help <command>`,
-    `coronavirus can't hurt me!`
+    `okie`
   ];
   setInterval(function() {
     let status = statuses[Math.floor(Math.random() * statuses.length)];
     bot.user.setActivity(status, {
-      type: "STREAMING",
+      type: "ONLINE",
       url: "https://www.twitch.tv/AaronBotDiscord"
     });
   }, 10000);
@@ -271,7 +261,7 @@ bot.on("message", async message => {
     let timeObj = (cooldown - (Date.now() - recent.get(message.author.id)[0]));
     message.channel.send(`<:xcross:658850997757804555> Bro wait the default cooldown is \`5 seconds\`...\n<a:load:663763329055195157> Please wait **${(timeObj / 1000).toFixed(1)}s**`).then(m => m.delete(timeObj));
   } else {
-  if(cmd == "use" || cmd == "eat" || cmd == "consume"){
+  if(cmd == "use" || cmd == "uses" || cmd == "utilize"){
       try {
       command = bot.uses.get(args[0]);
        let invUser = await inv.findOne({
@@ -367,6 +357,54 @@ bot.on("message", async message => {
   });
 });
 
+bot.on('messageUpdate', async (oldMessage, newMessage) => {
+  if(!oldMessage.content || !newMessage.content || oldMessage.author.bot) return;
+  let disableChannel = await disable.findOne({
+    channelID: oldMessage.channel.id
+  });
+  if(!disableChannel){
+    disableChannel = new disable({
+      channelID: oldMessage.channel.id,
+      commandName: [],
+      editsOld: [],
+      editsNew: [],
+      deletes: []
+    });
+  }
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = mm + '/' + dd + '/' + yyyy; 
+  disableChannel.editsOld = [oldMessage.content + "c4acda9b-31e7-4f2d-87ad-aa9d22609fed" + oldMessage.author.avatarURL + "c4acda9b-31e7-4f2d-87ad-aa9d22609fed" + oldMessage.author.tag + "c4acda9b-31e7-4f2d-87ad-aa9d22609fed" + today].concat(disableChannel.editsOld)
+  disableChannel.editsNew = [newMessage.content].concat(disableChannel.editsOld);
+  await disableChannel.save().catch(e => console.log(e));
+});
+bot.on("messageDelete", async (messageDelete) => {
+  if(!messageDelete.content || messageDelete.author.bot) return;
+  let disableChannel = await disable.findOne({
+    channelID: messageDelete.channel.id
+  });
+  if(!disableChannel){
+    disableChannel = new disable({
+      channelID: messageDelete.channel.id,
+      commandName: [],
+      editsOld: [],
+      editsNew: [],
+      deletes: []
+    });
+  }
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = mm + '/' + dd + '/' + yyyy; 
+  disableChannel.deletes = [messageDelete.content + "c4acda9b-31e7-4f2d-87ad-aa9d22609fed" + messageDelete.author.avatarURL + "c4acda9b-31e7-4f2d-87ad-aa9d22609fed" + messageDelete.author.tag + "c4acda9b-31e7-4f2d-87ad-aa9d22609fed" + today].concat(disableChannel.deletes);
+  await disableChannel.save().catch(e => console.log(e));
+});
+
 function event(){
   let picker = Math.ceil(Math.random() * 100);
   if(picker < 55) {//common
@@ -383,4 +421,4 @@ function event(){
 }
 
 
-    bot.login(process.env.BOT_TOKEN);
+    bot.login("NTc0OTEwODkwMzk5MjM2MTA0.XrQ7og.8LCgp8pWhPWmruWUts_G3GOihOo");

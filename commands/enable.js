@@ -16,7 +16,10 @@ exports.run = async (bot, message, args, ops) => {
       if(!disableChannel){
         disableChannel = new disable({
           channelID: message.channel.id,
-          commandName: []
+          commandName: [],
+          editsOld: [],
+          editsNew: [],
+          deletes: []
         });
       }
       if(args[0] == "all"){

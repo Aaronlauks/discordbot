@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
+    "canvas": "^2.6.1",
     "country-emoji": "^1.5.3",
     "country-list": "^2.2.0",
     "disco-oauth": "^4.2.7",
@@ -21,9 +22,9 @@
     "ffmpeg": "0.0.4",
     "fs": "0.0.1-security",
     "http": "0.0.0",
+    "jimp": "^0.10.3",
     "mongoose": "^5.9.10",
     "mysql": "^2.18.1",
-    "ncc": "^0.3.6",
     "node-pre-gyp": "^0.14.0",
     "opus": "0.0.0",
     "opusscript": "0.0.7",

@@ -10,5 +10,5 @@ module.exports.config = {
   category: "Economy",
   usage: "a use <item>",
   accessableby: "Everyone",
-  aliases: ["eat", "consume"]
+  aliases: ["uses", "utilize"]
 }
