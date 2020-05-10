@@ -56,7 +56,7 @@ exports.run = async function (bot, message, args) {
           message.channel.send(embed);
         }
       } else if(args[0] == "clear"){
-        if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.cannel.send(`<:xcross:690880230562201610> lolol you need \`MANAGE_MESSAGES\` to clear the list of deleted messages`);
+        if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send(`<:xcross:690880230562201610> lolol you need \`MANAGE_MESSAGES\` to clear the list of deleted messages`);
         if(disableChannel.deletes[0]){
           disableChannel.deletes = [];
           message.channel.send(`<:tickGreen:690880245611626597> Cleared list of deleted messages!`);
