@@ -56,6 +56,7 @@ exports.run = async function (bot, message, args) {
           message.channel.send(embed);
         }
       } else if(args[0] == "clear"){
+        if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.cannel.send(`<:xcross:690880230562201610> lolol you need \`MANAGE_MESSAGES\` to clear the list of edited messages`);
         if(disableChannel.editsOld[0] || disableChannel.editsNew[0]){
           disableChannel.editsOld = [];
           disableChannel.editsNew = [];
