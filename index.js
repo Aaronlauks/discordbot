@@ -421,4 +421,4 @@ function event(){
 }
 
 
-    bot.login("NTc0OTEwODkwMzk5MjM2MTA0.XrQ7og.8LCgp8pWhPWmruWUts_G3GOihOo");
+    bot.login(process.env.BOT_TOKEN);
