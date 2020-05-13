@@ -2,7 +2,7 @@ const discord = require("discord.js");
 const bot = new discord.Client({disableEveryone: true});
 
 exports.run = (bot, message, args) => {
-  if (message.author.id !== '488249600264896523') return message.reply('Only Aaronlauks can use this command!')
+  if (message.author.id !== '488249600264896523' || message.author.id !== '585321122287976449') return message.reply('Only Aaronlauks can use this command!')
    var mc = args.join(" ");
     if (mc === null) { return; }
     message.delete();
