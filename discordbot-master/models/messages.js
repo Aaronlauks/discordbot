@@ -8,8 +8,7 @@ const messageSchema = new mongoose.Schema({
   level: Number,
   cash: Number,
   multiplier: mongoose.Decimal128,
-  uses: Number,
-  notify: Boolean
+  uses: Number
 });
 
 module.exports = mongoose.model("saved", messageSchema);

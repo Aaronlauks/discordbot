@@ -1,13 +1,11 @@
 var bannedwords = ["fuck", "slut", "rape", "lolicon", "motherfucker", "loli", "f u c k", "lolli", "fvck", "fuk", "bitch", "lollicon", "lolicom", "porn", "sex"];
-let deleteChannels = ['682721467468611634', '682200283714945045', '684399471811231754', '673501879451516940', '698127929820839966'];
-const OauthClient = require('disco-oauth')
-let oauthClient = new OauthClient('574910890399236104');
+let deleteChannels = ['682721467468611634', '682200283714945045', '684399471811231754', '673501879451516940'];
 const discord = require("discord.js"); 
 const config = require("./config.json");
 const items = require("./items.json");
 const fs = require("fs");
 const recent = new Map();
-const dm = new Map();
+const active = new Map();
 const bot = new discord.Client({ disableEveryone: true });
 
 const mongoose = require('mongoose');
@@ -17,7 +15,7 @@ mongoose.connect(config.mongodb, {
 });
 const Messages = require('./models/messages.js');
 const inv = require('./models/inv.js');
-const disable = require('./models/disable.js');
+
 
 
 bot.aliases = new discord.Collection();
@@ -73,13 +71,23 @@ bot.on("ready", async () => {
 .send(embed)
 .catch();
   let statuses = [
-    `okie`
+    `okie`,
+    `oshit im online`,
+    `ㅇㅅㅇ`,
+    `Wear a mask!`,
+    `DM errors to Aaronlauks`,
+    `${config.prefix}help`,
+    `Prefix | (${config.prefix})`,
+    `Only in ${bot.guilds.size} servers!`,
+    `Made by Aaronlauks`,
+    `${config.prefix}help <command>`,
+    `coronavirus can't hurt me!`
   ];
   setInterval(function() {
     let status = statuses[Math.floor(Math.random() * statuses.length)];
     bot.user.setActivity(status, {
-      type: "ONLINE",
-      url: "https://www.twitch.tv/AaronBotDiscord"
+      type: "STREAMING",
+      url: "https://www.twitch.tv/Aaronlauks"
     });
   }, 10000);
   bot.user.setActivity(statuses);
@@ -88,26 +96,48 @@ bot.on("ready", async () => {
 
 
 bot.on('message', message => { //this event is fired, whenever the bot sees a new message
-   if (message.isMemberMentioned(bot.user) && !message.content.includes(`@everyone`) && !message.content.includes(`@here`)) { 
+   if (message.isMemberMentioned(bot.user)) { 
      message.channel.send(`My prefix is \`${config.prefix}\` so please stop pinging me ;-;`); 
    }
 });
 
-let number = 0;
+bot.on("message", msg => {
+  //one word stories
+  if (msg.channel.name == "one-word-story") {
+    var mc1 = msg.content.split(" ")[1];
+    var mc2 = msg.content.split("_")[1];
+    var mc3 = msg.content.split("-")[1];
+    var mc4 = msg.content.split(".")[1];
+    var mc5 = msg.content.split(",")[1];
+    if (mc1 || mc2 || mc3 || mc4 || mc5) {
+      msg.delete();
+      msg.author.sendMessage(
+        "You can only send one word in #one-word-stories!"
+      );
+    }
+  }
+});
+
+
 bot.on("message", message => {
   if (message.author.bot) return;
   if(deleteChannels.includes(message.channel.id)){
     message.delete();
   }
     if (message.channel.type === "dm") {
-      let mc = message.content;
-      let mem = message.author;
-      const embed = new discord.RichEmbed();
-      embed.setAuthor(`${mem.username}: ${mc}`, mem.avatarURL);
-      bot.channels.get("673501879451516940").send(embed).catch();
+    let mc = message.content;
+    let mem = message.author;
+    const embed = new discord.RichEmbed();
+    embed.setAuthor(`${mem.username}: ${mc}`, mem.avatarURL);
+    if (mem.id !== "574910890399236104") {
+      embed.setColor("#00ff15");
     }
-  });
-  
+    bot.channels
+      .get("673501879451516940")
+      .send(embed)
+      .catch();
+    }
+});
 
 
 
@@ -115,28 +145,19 @@ bot.on("message", message => {
 
 //message event
 bot.on("message", async message => {
-  
   let cooldown = 5000;
   let prefix = config.prefix;
   if (!message.content.toLowerCase().startsWith(prefix)) return;
   
+  
+  let msg = message.content.toUpperCase();
   let sender = message.author;
   let args = message.content.slice(prefix.length).trim().split(/ +/g); //args is the inputs after the cmd(a$say | test: |,test)
   let cmd = args.shift().toLowerCase(); //cmd is the command name (a help: help)
   let command;
   if (sender.bot) return;
-  if(message.content.startsWith("a say")){
-    if (message.author.id !== '488249600264896523' || message.author.id !== '585321122287976449') return message.reply('Only Aaronlauks can use this command!')
-    var mc = args.join(" ");
-    if (mc == null) return;
-    message.delete();
-    return message.channel.send(mc);
-  }
-  let disableChannels = await disable.findOne({
-    channelID: message.channel.id
-  });
-  
   let ops = {
+      active: active,
       categories: categories,
       items: items
     }
@@ -148,7 +169,6 @@ bot.on("message", async message => {
     } else {
       command = bot.commands.get(bot.aliases.get(cmd));
     }
-    if(disableChannels && disableChannels.commandName.includes(command.config.name)) return message.channel.send(`<:xcross:690880230562201610> \`${cmd}\` command is disabled in this channel!`).then(m => m.delete(3000));
     command.run(bot, message, args, ops);
   } catch (e) {
     console.log(`${cmd} is not a command`);
@@ -173,7 +193,7 @@ bot.on("message", async message => {
     let timeObj = (cooldown - (Date.now() - recent.get(message.author.id)[0]));
     message.channel.send(`<:xcross:658850997757804555> Bro wait the default cooldown is \`5 seconds\`...\n<a:load:663763329055195157> Please wait **${(timeObj / 1000).toFixed(1)}s**`).then(m => m.delete(timeObj));
   } else {
-  if(cmd == "use" || cmd == "uses" || cmd == "utilize"){
+  if(cmd == "use" || cmd == "eat" || cmd == "consume"){
       try {
       command = bot.uses.get(args[0]);
        let invUser = await inv.findOne({
@@ -201,6 +221,7 @@ bot.on("message", async message => {
   
   if (message.author.bot) return;
   let prefix = config.prefix;
+  let args = message.content.slice(prefix.length).trim().split(/ +/g);
   let invUser = await inv.findOne({
     userID: message.author.id
   });
@@ -215,7 +236,7 @@ bot.on("message", async message => {
     });
     await invUser.save().catch(e => console.log(e));
   }
-
+  
   let messageUser = await Messages.findOne({
     userID: message.author.id
   });
@@ -231,8 +252,7 @@ bot.on("message", async message => {
       level: 0,
       cash: 500,
       multiplier: 1,
-      uses: 0,
-      notify: true
+      uses: 0
     });
 
     
@@ -261,60 +281,12 @@ bot.on("message", async message => {
     let receive = saved.level * 50;
     let lvup = `<@${message.author.id}> just levelled up to level ${saved.level}!\n**+** $${receive}`;
     
-    if(saved.notify) message.channel.send(lvup);
+    message.channel.send(lvup);
     saved.cash += receive;
     
   
     await saved.save().catch(e => console.log(e));
   });
-});
-
-bot.on('messageUpdate', async (oldMessage, newMessage) => {
-  if(!oldMessage.content || !newMessage.content || oldMessage.author.bot) return;
-  let disableChannel = await disable.findOne({
-    channelID: oldMessage.channel.id
-  });
-  if(!disableChannel){
-    disableChannel = new disable({
-      channelID: oldMessage.channel.id,
-      commandName: [],
-      editsOld: [],
-      editsNew: [],
-      deletes: []
-    });
-  }
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-
-  today = mm + '/' + dd + '/' + yyyy; 
-  disableChannel.editsOld = [oldMessage.content + "c4acda9b-31e7-4f2d-87ad-aa9d22609fed" + oldMessage.author.avatarURL + "c4acda9b-31e7-4f2d-87ad-aa9d22609fed" + oldMessage.author.tag + "c4acda9b-31e7-4f2d-87ad-aa9d22609fed" + today].concat(disableChannel.editsOld)
-  disableChannel.editsNew = [newMessage.content].concat(disableChannel.editsOld);
-  await disableChannel.save().catch(e => console.log(e));
-});
-bot.on("messageDelete", async (messageDelete) => {
-  if(!messageDelete.content || messageDelete.author.bot) return;
-  let disableChannel = await disable.findOne({
-    channelID: messageDelete.channel.id
-  });
-  if(!disableChannel){
-    disableChannel = new disable({
-      channelID: messageDelete.channel.id,
-      commandName: [],
-      editsOld: [],
-      editsNew: [],
-      deletes: []
-    });
-  }
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-
-  today = mm + '/' + dd + '/' + yyyy; 
-  disableChannel.deletes = [messageDelete.content + "c4acda9b-31e7-4f2d-87ad-aa9d22609fed" + messageDelete.author.avatarURL + "c4acda9b-31e7-4f2d-87ad-aa9d22609fed" + messageDelete.author.tag + "c4acda9b-31e7-4f2d-87ad-aa9d22609fed" + today].concat(disableChannel.deletes);
-  await disableChannel.save().catch(e => console.log(e));
 });
 
 function event(){
@@ -331,6 +303,6 @@ function event(){
     return `rarer event`;
   }
 }
+  
 
-
-    bot.login(process.env.BOT_TOKEN);
+bot.login(process.env.BOT_TOKEN);

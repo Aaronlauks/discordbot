@@ -52,17 +52,7 @@ exports.run = async (bot, message, args) => {
     const saved = await Messages.findOne({
       userID: message.author.id
     });
-    if(args[0]){
-      if(args[0] == "true" || args[0] == "enable" || args[0] == "t" || args[0] == "yes" || args[0] == "y"){
-        message.channel.send(`<:tickGreen:690880245611626597> enabled level up pings c:`);
-        saved.notify = true;
-        await saved.save().catch(e => console.log(e));
-      } else if(args[0] == "false" || args[0] == "disable" || args[0] == "f" || args[0] == "no" || args[0] == "n"){
-        message.channel.send(`<:tickGreen:690880245611626597> disabled level up pings c:`);
-        saved.notify = false;
-        await saved.save().catch(e => console.log(e));
-      }
-    } else {
+    
     const targetxp = (saved.level + 1) * 500;
     const remaining = targetxp - saved.xp;
     const nextlevel = saved.level + 1;
@@ -92,15 +82,14 @@ exports.run = async (bot, message, args) => {
       message.channel.send(`<:xcross:658850997757804555> You do not have any xp :C`);
     }
   }
-  }
 };
 
 
 module.exports.config = {
   name: "level",
-  description: "This command displayes the amount of xp you have! Disable level up pings by typing \`a level disable\`",
+  description: "This command displayes the amount of xp you have!",
   category: "Economy",
-  usage: "a level <mention | enable/disable>",
+  usage: "a level",
   accessableby: "Everyone",
   aliases: ["xp", "experience", "lv", "lvl"]
 }
